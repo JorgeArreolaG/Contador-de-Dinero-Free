@@ -1,6 +1,9 @@
 package com.example.desarrollo.contadord_mx;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,8 +17,18 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.view.View;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.sql.Date;
 
 public class Principal extends AppCompatActivity {
+
+    private EditText etTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +51,10 @@ public class Principal extends AppCompatActivity {
         final EditText et2 = (EditText)findViewById(R.id.et2);
         final EditText et1 = (EditText)findViewById(R.id.et1);
         final EditText et05 = (EditText)findViewById(R.id.et05);
-        final EditText etTotal = (EditText)findViewById(R.id.etTotal);
+
+        etTotal = findViewById(R.id.etTotal);
+        //final EditText etTotal = (EditText)findViewById(R.id.etTotal);
+
 
         final TextView lbl1000 = (TextView)findViewById(R.id.lbl1000);
         final TextView lbl500 = (TextView)findViewById(R.id.lbl500);
@@ -88,8 +104,7 @@ public class Principal extends AppCompatActivity {
                 et05.setText("");
             }
         });
-
-
+        
         et1000.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -984,8 +999,30 @@ public class Principal extends AppCompatActivity {
 
     }
 
+    //Boton guardar
+    private void Guardar(String Total){
+        BaseHelper helper = new BaseHelper(this,"Demo",null,1);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try{
+            ContentValues c = new ContentValues();
+            c.put("Total",Total);
+            db.insert("BITACORAS",null,c);
+            db.close();
+            Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     public void ejecutar_quienes_somos (View view){
         Intent intent=new Intent (this, Quienes_somos.class);
+        startActivity(intent);
+    }
+
+    public void ejecutar_historial (View view){
+        Intent intent = new Intent(this, Bitacora.class);
         startActivity(intent);
     }
 
@@ -1019,6 +1056,16 @@ public class Principal extends AppCompatActivity {
             return  true;
         }
 
+        if (id == R.id.guardar){
+            Guardar(etTotal.getText().toString());
+        }
+
+        if (id == R.id.historial){
+            ejecutar_historial(null);
+        }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Quienes_somos"></activity>
+        <activity android:name=".Quienes_somos" />
+        <activity android:name=".Bitacora" />
+        <activity android:name=".Modificar"></activity>
     </application>
 
 </manifest>
