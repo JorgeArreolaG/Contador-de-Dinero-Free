@@ -19,4 +19,16 @@
         android:id="@+id/valorar"
         android:enabled="false"
         android:title="Valorar" />
+
+    <item
+        android:id="@+id/guardar"
+        android:icon="@mipmap/guardar"
+        android:title="Guardar"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/historial"
+        android:icon="@mipmap/lista"
+        android:title="Historial"
+        app:showAsAction="ifRoom" />
 </menu>
