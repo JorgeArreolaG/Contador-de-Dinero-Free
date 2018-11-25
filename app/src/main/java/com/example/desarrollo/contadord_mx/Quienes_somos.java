@@ -3,6 +3,7 @@ package com.example.desarrollo.contadord_mx;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,7 +17,6 @@ public class Quienes_somos extends AppCompatActivity {
         this.setTitle("¿Quiénes somos?");
 
         Button contacto = (Button)findViewById(R.id.btnContacto);
-        Button ok = (Button)findViewById(R.id.btnok);
 
         contacto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,12 +25,18 @@ public class Quienes_somos extends AppCompatActivity {
             }
         });
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        if(getSupportActionBar()!= null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void enviarEmail(){

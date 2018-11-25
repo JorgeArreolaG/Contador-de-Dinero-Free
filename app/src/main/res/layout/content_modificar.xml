@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Principal"
-    tools:showIn="@layout/activity_principal">
+    tools:context=".Modificar"
+    tools:showIn="@layout/activity_modificar">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"

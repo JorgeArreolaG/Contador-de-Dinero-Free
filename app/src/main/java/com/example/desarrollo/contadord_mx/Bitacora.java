@@ -1,15 +1,18 @@
 package com.example.desarrollo.contadord_mx;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,11 +26,31 @@ public class Bitacora extends AppCompatActivity {
     ArrayList<String> listado;
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        CargarListado();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitacora);
         listView = (ListView)findViewById(R.id.listview);
         CargarListado();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(Bitacora.this,listado.get(position),Toast.LENGTH_SHORT).show();
+                int clave = Integer.parseInt(listado.get(position).split(" ")[0]);
+                String total = (listado.get(position).split(" ")[1]);
+                Intent intent = new Intent(Bitacora.this, Modificar.class);
+                intent.putExtra("Id", clave);
+                intent.putExtra("Total", total);
+                startActivity(intent);
+            }
+        });
+
 
         if(getSupportActionBar()!= null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,6 +58,8 @@ public class Bitacora extends AppCompatActivity {
         }
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,7 +83,7 @@ public class Bitacora extends AppCompatActivity {
         Cursor c = db.rawQuery(sql,null);
         if(c.moveToFirst()){
             do{
-                String linea = c.getInt(0) +"."+" "+"Total:"+" "+"$"+ c.getString(1);
+                String linea = c.getInt(0) + " " + c.getString(1);
                 datos.add(linea);
             }while (c.moveToNext());
         }

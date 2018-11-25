@@ -25,8 +25,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Quienes_somos" />
-        <activity android:name=".Bitacora" />
-        <activity android:name=".Modificar"></activity>
+        <activity
+            android:name=".Bitacora"
+            android:label="Historial"/>
+        <activity
+            android:name=".Modificar"
+            android:label="@string/title_activity_modificar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
