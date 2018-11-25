@@ -1,5 +1,6 @@
 package com.example.desarrollo.contadord_mx;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -983,6 +984,11 @@ public class Principal extends AppCompatActivity {
 
     }
 
+    public void ejecutar_quienes_somos (View view){
+        Intent intent=new Intent (this, Quienes_somos.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -997,9 +1003,20 @@ public class Principal extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.quienes_somos){
+            ejecutar_quienes_somos(null);
+        }
+
+        if (id == R.id.mas_app){
+            return  true;
+        }
+
+        if (id == R.id.compartir){
+            return  true;
+        }
+
+        if (id == R.id.valorar){
+            return  true;
         }
 
         return super.onOptionsItemSelected(item);
