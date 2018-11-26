@@ -83,7 +83,7 @@ public class Bitacora extends AppCompatActivity {
         Cursor c = db.rawQuery(sql,null);
         if(c.moveToFirst()){
             do{
-                String linea = c.getInt(0) + " " + c.getString(1);
+                String linea = c.getInt(0) +" " + c.getString(1);
                 datos.add(linea);
             }while (c.moveToNext());
         }

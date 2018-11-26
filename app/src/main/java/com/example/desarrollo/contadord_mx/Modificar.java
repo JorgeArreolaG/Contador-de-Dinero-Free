@@ -1049,22 +1049,6 @@ public class Modificar extends AppCompatActivity {
         if (item.getItemId()==android.R.id.home){
             finish();
         }
-        
-        if (id == R.id.quienes_somos){
-            //ejecutar_quienes_somos(null);
-        }
-
-        if (id == R.id.mas_app){
-            return  true;
-        }
-
-        if (id == R.id.compartir){
-            return  true;
-        }
-
-        if (id == R.id.valorar){
-            return  true;
-        }
 
         if (id == R.id.modificar){
             Modificar(clave,etTotal.getText().toString());
