@@ -1001,18 +1001,26 @@ public class Principal extends AppCompatActivity {
 
     //Boton guardar
     private void Guardar(String Total){
-        BaseHelper helper = new BaseHelper(this,"Demo",null,1);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        try{
-            ContentValues c = new ContentValues();
-            c.put("Total",Total);
-            db.insert("BITACORAS",null,c);
-            db.close();
-            Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
 
-        }catch (Exception e){
-            Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
+        if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
+
+            Toast.makeText(this,"Ingrese informacíon a guardar.",Toast.LENGTH_SHORT).show();
+
+        }else{
+            BaseHelper helper = new BaseHelper(this,"Demo",null,1);
+            SQLiteDatabase db = helper.getWritableDatabase();
+            try{
+                ContentValues c = new ContentValues();
+                c.put("Total",Total);
+                db.insert("BITACORAS",null,c);
+                db.close();
+                Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
+
+            }catch (Exception e){
+                Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
         }
+
     }
 
 
