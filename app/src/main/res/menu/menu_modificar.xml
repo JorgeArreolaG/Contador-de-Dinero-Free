@@ -7,12 +7,13 @@
         android:id="@+id/modificar"
         android:icon="@mipmap/guardar"
         android:title="Modificar"
+        android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/eliminar"
         android:icon="@mipmap/eliminar"
-        android:title="Eliminar"
+        android:title="Eliminar Registro"
         app:showAsAction="ifRoom" />
 
 </menu>

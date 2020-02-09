@@ -52,7 +52,7 @@ public class Quienes_somos extends AppCompatActivity {
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Contacto desde App Contador de Dinero Mx");
         try {
             //Enviamos el Correo iniciando una nueva Activity con el emailIntent.
-            startActivity(Intent.createChooser(emailIntent, "Enviar Correo a Servicio"));
+            startActivity(Intent.createChooser(emailIntent, "Enviar Correo a Desarrollo"));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(Quienes_somos.this, "No hay ningun cliente de correo instalado.", Toast.LENGTH_SHORT).show();
         }

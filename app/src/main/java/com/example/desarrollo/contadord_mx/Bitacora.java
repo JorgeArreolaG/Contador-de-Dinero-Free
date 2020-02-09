@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -31,6 +32,7 @@ public class Bitacora extends AppCompatActivity {
         CargarListado();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +43,13 @@ public class Bitacora extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(Bitacora.this,listado.get(position),Toast.LENGTH_SHORT).show();
                 int clave = Integer.parseInt(listado.get(position).split(" ")[0]);
                 String total = (listado.get(position).split(" ")[1]);
                 Intent intent = new Intent(Bitacora.this, Modificar.class);
                 intent.putExtra("Id", clave);
                 intent.putExtra("Total", total);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -69,10 +71,18 @@ public class Bitacora extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void CargarListado(){
+    public void CargarListado(){
         listado = ListaBitacora();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listado);
-        listView.setAdapter(adapter);
+
+        if(listado.size()>0){
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listado);
+            listView.setAdapter(adapter);
+        }else{
+            ListView lv = (ListView)findViewById(R.id.listview);
+            lv.setEmptyView(findViewById(R.id.emptyListView2));
+            lv.setEmptyView(findViewById(R.id.emptyListView));
+        }
+
     }
 
     private ArrayList<String>ListaBitacora(){

@@ -8,22 +8,26 @@
     <item
         android:id="@+id/mas_app"
         android:enabled="false"
+        android:visible="false"
         android:title="Otras App's" />
 
     <item
         android:id="@+id/compartir"
         android:enabled="false"
+        android:visible="false"
         android:title="Compartir Aplicación" />
 
     <item
         android:id="@+id/valorar"
         android:enabled="false"
+        android:visible="false"
         android:title="Valorar" />
 
     <item
         android:id="@+id/guardar"
         android:icon="@mipmap/guardar"
         android:title="Guardar"
+        android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
