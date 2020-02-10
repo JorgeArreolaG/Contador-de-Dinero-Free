@@ -646,6 +646,56 @@ public class Principal extends AppCompatActivity {
 
     }
 
+    //Compartir informacion de editText
+    private void CompartirInformacion(){
+
+        String b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
+
+        //Si el editext esta vacio le asigno un 0
+        b1000 = (et1000.getText().toString().trim().equals("")?"0":et1000.getText().toString());
+        b500 = (et500.getText().toString().trim().equals("")?"0":et500.getText().toString());
+        b200 = (et200.getText().toString().trim().equals("")?"0":et200.getText().toString());
+        b100 = (et100.getText().toString().trim().equals("")?"0":et100.getText().toString());
+        b50 = (et50.getText().toString().trim().equals("")?"0":et50.getText().toString());
+        b20 = (et20.getText().toString().trim().equals("")?"0":et20.getText().toString());
+        m20 = (etm20.getText().toString().trim().equals("")?"0":etm20.getText().toString());
+        m10 = (et10.getText().toString().trim().equals("")?"0":et10.getText().toString());
+        m5 = (et5.getText().toString().trim().equals("")?"0":et5.getText().toString());
+        m2 = (et2.getText().toString().trim().equals("")?"0":et2.getText().toString());
+        m1 = (et1.getText().toString().trim().equals("")?"0":et1.getText().toString());
+        m05 = (et05.getText().toString().trim().equals("")?"0":et05.getText().toString());
+
+
+        //Instanciamos un Intent del tipo ACTION_SEND
+        Intent compartirIntent = new Intent(android.content.Intent.ACTION_SEND);
+        //Aqui definimos la tipologia de datos del contenido
+        compartirIntent.setType("text/plain");
+        // Aqui definimos un titulo
+        compartirIntent.putExtra(Intent.EXTRA_TITLE, "Total del conteo");
+        // Aqui definimos el texto a enviar
+        compartirIntent.putExtra(Intent.EXTRA_TEXT,   "Total del conteo: "+'\n'+
+                b1000 + " Billetes de $1000 = "+ "$"+lbl1000.getText() +'\n'+
+                b500 + " Billetes de $500 = "+ "$"+lbl500.getText() +'\n'+
+                b200 + " Billetes de $200 = "+ "$"+lbl200.getText() +'\n'+
+                b100 + " Billetes de $100 = "+ "$"+lbl100.getText() +'\n'+
+                b50 + " Billetes de $50 = "+ "$"+lbl50.getText() +'\n'+
+                b20 + " Billetes de $20 = "+ "$"+lbl20.getText() +'\n'+
+                m20 + " Monedas de $20 = "+ "$"+lblm20.getText() +'\n'+
+                m10 + " Monedas de $10 = "+ "$"+lbl10.getText() +'\n'+
+                m5 + " Monedas de $5 = "+ "$"+lbl5.getText() +'\n'+
+                m2 + " Monedas de $2 = "+ "$"+lbl2.getText() +'\n'+
+                m5 + " Monedas de $1 = "+ "$"+lbl1.getText() +'\n'+
+                m05 + " Monedas de $.50 = "+ "$"+lbl5.getText() +'\n'+
+                "------------------------------------------------------------"+'\n'+
+                "Total: $"+etTotal.getText());
+        try {
+            //Enviamos el Correo iniciando una nueva Activity con el emailIntent.
+            startActivity(Intent.createChooser(compartirIntent, "Compartir conteo"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(Principal.this, "No hay ningun cliente de mensajeria instalado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void ejecutar_quienes_somos (View view){
         Intent intent=new Intent (this, Quienes_somos.class);
         startActivity(intent);
@@ -692,6 +742,17 @@ public class Principal extends AppCompatActivity {
 
         if (id == R.id.historial){
             ejecutar_historial(null);
+        }
+
+        if (id == R.id.compartirConteo){
+            if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
+
+                Toast.makeText(this,"Ingrese información a guardar.",Toast.LENGTH_SHORT).show();
+
+            }else{
+                CompartirInformacion();
+            }
+
         }
         return super.onOptionsItemSelected(item);
     }

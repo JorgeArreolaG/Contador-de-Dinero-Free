@@ -31,8 +31,17 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/compartirConteo"
+        android:icon="@mipmap/compartir"
+        android:title="Compartir"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/historial"
         android:icon="@mipmap/lista"
         android:title="Historial"
         app:showAsAction="ifRoom" />
+
+
+
 </menu>
