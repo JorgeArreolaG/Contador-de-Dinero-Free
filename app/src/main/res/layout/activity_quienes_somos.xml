@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo_mx"/>
+        app:srcCompat="@mipmap/logo"/>
 
     <TextView
         android:id="@+id/textView4"
