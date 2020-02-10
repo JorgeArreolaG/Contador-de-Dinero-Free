@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.sql.SQLData;
 import java.util.ArrayList;
 
 public class Bitacora extends AppCompatActivity {
@@ -33,8 +34,15 @@ public class Bitacora extends AppCompatActivity {
     }
 
 
+
+    String total, bmil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Instancia a la base de datos
+        BaseHelper helper = new BaseHelper(this,"Demo",null,1);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitacora);
         listView = (ListView)findViewById(R.id.listview);
@@ -43,11 +51,30 @@ public class Bitacora extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int clave = Integer.parseInt(listado.get(position).split(" ")[0]);
-                String total = (listado.get(position).split(" ")[1]);
+                int clave = Integer.parseInt(listado.get(position).split(" Total: ")[0]);
+
+                //String sql="Select * from Bitacoras where Id="+clave;
+
+                //Consultamos los datos que corresponden al id de la lista
+                Cursor c = db.rawQuery("SELECT * FROM Bitacoras WHERE Id="+clave, null);
+
+                if (c != null) {
+                    c.moveToFirst();
+                    do {
+                        //Asignamos el valor en nuestras variables para usarlos en lo que necesitemos
+                        total = c.getString(c.getColumnIndex("TOTAL"));
+                        bmil = c.getString(c.getColumnIndex("BMIL"));
+                    } while (c.moveToNext());
+                }
+
+                //Cerramos el cursor y la conexion con la base de datos
+                c.close();
+                db.close();
+
                 Intent intent = new Intent(Bitacora.this, Modificar.class);
                 intent.putExtra("Id", clave);
-                intent.putExtra("Total", total);
+                intent.putExtra("Total",total );
+                intent.putExtra("Bmil", bmil);
                 startActivity(intent);
                 finish();
             }
@@ -71,6 +98,7 @@ public class Bitacora extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void CargarListado(){
         listado = ListaBitacora();
 
@@ -93,7 +121,7 @@ public class Bitacora extends AppCompatActivity {
         Cursor c = db.rawQuery(sql,null);
         if(c.moveToFirst()){
             do{
-                String linea = c.getInt(0) +" " + c.getString(1);
+                String linea = c.getInt(0) +" Total: " + "$"+c.getString(1);
                 datos.add(linea);
             }while (c.moveToNext());
         }

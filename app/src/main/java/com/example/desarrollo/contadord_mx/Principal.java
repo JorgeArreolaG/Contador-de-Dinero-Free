@@ -24,7 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.sql.Date;
+import java.util.Date;
 
 public class Principal extends AppCompatActivity {
 
@@ -113,7 +113,7 @@ public class Principal extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Guardar(etTotal.getText().toString());
+                Guardar(etTotal.getText().toString(), et1000.getText().toString());
 
                 LimpiarDatos();
 
@@ -621,7 +621,7 @@ public class Principal extends AppCompatActivity {
     }
 
     //Boton guardar
-    private void Guardar(String Total){
+    private void Guardar(String Total, String Bmil){
 
         if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
@@ -633,6 +633,8 @@ public class Principal extends AppCompatActivity {
             try{
                 ContentValues c = new ContentValues();
                 c.put("Total",Total);
+                c.put("Bmil",Bmil);
+                //c.put("Fecha", Date.);
                 db.insert("BITACORAS",null,c);
                 db.close();
                 Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
@@ -685,7 +687,7 @@ public class Principal extends AppCompatActivity {
         }
 
         if (id == R.id.guardar){
-            Guardar(etTotal.getText().toString());
+            //Guardar(etTotal.getText().toString());
         }
 
         if (id == R.id.historial){

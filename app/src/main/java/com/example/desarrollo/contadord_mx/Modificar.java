@@ -24,7 +24,7 @@ public class Modificar extends AppCompatActivity {
     private EditText etTotal,et1000,et500,et200,et100,et50,et20,etm20,et10,et5,et2,et1,et05;
     private TextView lbl1000,lbl500,lbl200,lbl100,lbl50,lbl20,lblm20,lbl10,lbl5,lbl2,lbl1,lbl05;
     int clave;
-    String total;
+    String total, bmil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class Modificar extends AppCompatActivity {
         if(b!=null){
            clave = b.getInt("Id");
            total = b.getString("Total");
+           bmil = b.getString("Bmil");
         }
 
 
@@ -118,7 +119,7 @@ public class Modificar extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Modificar(clave,etTotal.getText().toString());
+                Modificar(clave,etTotal.getText().toString(),et1000.getText().toString());
 
                 Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
                 startActivity(i);
@@ -128,6 +129,7 @@ public class Modificar extends AppCompatActivity {
 
         //Set informacion obtenida para modificar
         etTotal.setText(total);
+        et1000.setText(bmil);
 
         et1000.addTextChangedListener(new TextWatcher() {
             @Override
@@ -630,7 +632,7 @@ public class Modificar extends AppCompatActivity {
     }
 
     //Boton modificar
-    private void Modificar(int Id, String Total){
+    private void Modificar(int Id, String Total, String Bmil){
 
         if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
@@ -640,7 +642,7 @@ public class Modificar extends AppCompatActivity {
             BaseHelper helper = new BaseHelper(this,"Demo",null,1);
             SQLiteDatabase db = helper.getWritableDatabase();
             try{
-                String sql="update Bitacoras set Total='" + Total +"' where Id="+Id;
+                String sql="update Bitacoras set Total='" + Total +"', Bmil='" + Bmil +"' where Id="+Id;
                 db.execSQL(sql);
                 db.close();
                 Toast.makeText(this,"Se modifico correctamente",Toast.LENGTH_SHORT).show();
@@ -669,8 +671,7 @@ public class Modificar extends AppCompatActivity {
 
     protected void onRestart() {
 
-        // TODO Auto-generated method stub
-        super.onRestart();
+         super.onRestart();
         Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
         startActivity(i);
         finish();
@@ -698,8 +699,8 @@ public class Modificar extends AppCompatActivity {
         }
 
         if (id == R.id.modificar){
-            Modificar(clave,etTotal.getText().toString());
-            onBackPressed();
+            //Modificar(clave,etTotal.getText().toString());
+            //onBackPressed();
         }
 
         if (id == R.id.eliminar){
