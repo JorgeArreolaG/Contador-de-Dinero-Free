@@ -113,7 +113,10 @@ public class Principal extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Guardar(etTotal.getText().toString(), et1000.getText().toString());
+                Guardar(etTotal.getText().toString(), et1000.getText().toString(), et500.getText().toString(), et200.getText().toString(),
+                        et100.getText().toString(), et50.getText().toString(), et20.getText().toString(), etm20.getText().toString(),
+                        et10.getText().toString(), et5.getText().toString(), et2.getText().toString(), et1.getText().toString(),
+                        et05.getText().toString());
 
                 LimpiarDatos();
 
@@ -621,7 +624,8 @@ public class Principal extends AppCompatActivity {
     }
 
     //Boton guardar
-    private void Guardar(String Total, String Bmil){
+    private void Guardar(String Total, String B1000, String B500, String B200, String B100, String B50, String B20, String M20,
+                         String M10,  String M5,  String M2,  String M1,  String M05){
 
         if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
@@ -633,8 +637,19 @@ public class Principal extends AppCompatActivity {
             try{
                 ContentValues c = new ContentValues();
                 c.put("Total",Total);
-                c.put("Bmil",Bmil);
-                //c.put("Fecha", Date.);
+                c.put("B1000",B1000);
+                c.put("B500",B500);
+                c.put("B200",B200);
+                c.put("B100",B100);
+                c.put("B50",B50);
+                c.put("B20",B20);
+                c.put("M20",M20);
+                c.put("M10",M10);
+                c.put("M5",M5);
+                c.put("M2",M2);
+                c.put("M1",M1);
+                c.put("M05",M05);
+
                 db.insert("BITACORAS",null,c);
                 db.close();
                 Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
@@ -747,7 +762,7 @@ public class Principal extends AppCompatActivity {
         if (id == R.id.compartirConteo){
             if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
-                Toast.makeText(this,"Ingrese información a guardar.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Ingrese información a compartir.",Toast.LENGTH_SHORT).show();
 
             }else{
                 CompartirInformacion();

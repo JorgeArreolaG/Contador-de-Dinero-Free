@@ -35,7 +35,7 @@ public class Bitacora extends AppCompatActivity {
 
 
 
-    String total, bmil;
+    String total, b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,19 @@ public class Bitacora extends AppCompatActivity {
                     do {
                         //Asignamos el valor en nuestras variables para usarlos en lo que necesitemos
                         total = c.getString(c.getColumnIndex("TOTAL"));
-                        bmil = c.getString(c.getColumnIndex("BMIL"));
+                        b1000 = c.getString(c.getColumnIndex("B1000"));
+                        b500 = c.getString(c.getColumnIndex("B500"));
+                        b200 = c.getString(c.getColumnIndex("B200"));
+                        b100 = c.getString(c.getColumnIndex("B100"));
+                        b50 = c.getString(c.getColumnIndex("B50"));
+                        b20 = c.getString(c.getColumnIndex("B20"));
+                        m20 = c.getString(c.getColumnIndex("M20"));
+                        m10 = c.getString(c.getColumnIndex("M10"));
+                        m5 = c.getString(c.getColumnIndex("M5"));
+                        m2 = c.getString(c.getColumnIndex("M2"));
+                        m1 = c.getString(c.getColumnIndex("M1"));
+                        m05 = c.getString(c.getColumnIndex("M05"));
+
                     } while (c.moveToNext());
                 }
 
@@ -74,7 +86,19 @@ public class Bitacora extends AppCompatActivity {
                 Intent intent = new Intent(Bitacora.this, Modificar.class);
                 intent.putExtra("Id", clave);
                 intent.putExtra("Total",total );
-                intent.putExtra("Bmil", bmil);
+                intent.putExtra("B1000", b1000);
+                intent.putExtra("B500", b500);
+                intent.putExtra("B200", b200);
+                intent.putExtra("B100", b100);
+                intent.putExtra("B50", b50);
+                intent.putExtra("B20", b20);
+                intent.putExtra("M20", m20);
+                intent.putExtra("M10", m10);
+                intent.putExtra("M5", m5);
+                intent.putExtra("M2", m2);
+                intent.putExtra("M1", m1);
+                intent.putExtra("M05", m05);
+
                 startActivity(intent);
                 finish();
             }
