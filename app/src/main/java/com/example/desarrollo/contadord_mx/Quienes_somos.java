@@ -45,9 +45,9 @@ public class Quienes_somos extends AppCompatActivity {
         //Aqui definimos la tipologia de datos del contenido dle Email en este caso text/html
         emailIntent.setType("text/html");
         // Indicamos con un Array de tipo String las direcciones de correo a las cuales enviar
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"JorgeArreola.G@outlook.com"});
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"newdesign.dev@gmail.com"});
         // Aqui definimos un titulo para el Email
-        emailIntent.putExtra(android.content.Intent.EXTRA_TITLE, "Contador de Dinero Mx");
+        emailIntent.putExtra(android.content.Intent.EXTRA_TITLE, "Contador de Dinero Mexico");
         // Aqui definimos un Asunto para el Email
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Contacto desde App Contador de Dinero Mx");
         try {

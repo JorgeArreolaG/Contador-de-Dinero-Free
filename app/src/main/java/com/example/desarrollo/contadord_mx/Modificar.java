@@ -138,9 +138,7 @@ public class Modificar extends AppCompatActivity {
                         ,etm20.getText().toString(),et10.getText().toString(),et5.getText().toString(),et2.getText().toString()
                         ,et1.getText().toString(),et05.getText().toString());
 
-                Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
-                startActivity(i);
-                finish();
+
             }
         });
 
@@ -678,6 +676,10 @@ public class Modificar extends AppCompatActivity {
                 db.execSQL(sql);
                 db.close();
                 Toast.makeText(this,"Se modifico correctamente",Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
+                startActivity(i);
+                finish();
 
             }catch (Exception e){
                 Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
