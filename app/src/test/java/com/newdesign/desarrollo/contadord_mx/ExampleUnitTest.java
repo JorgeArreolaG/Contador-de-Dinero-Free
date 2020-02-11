@@ -1,4 +1,4 @@
-package com.example.desarrollo.contadord_mx;
+package com.newdesign.desarrollo.contadord_mx;
 
 import org.junit.Test;
 

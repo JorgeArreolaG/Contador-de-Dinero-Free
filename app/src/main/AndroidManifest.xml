@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.desarrollo.contadord_mx">
+    package="com.newdesign.desarrollo.contadord_mx">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Principal"
+            android:name="com.newdesign.desarrollo.contadord_mx.Principal"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -23,14 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Quienes_somos"
+        <activity android:name="com.newdesign.desarrollo.contadord_mx.Quienes_somos"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Bitacora"
+            android:name="com.newdesign.desarrollo.contadord_mx.Bitacora"
             android:screenOrientation="portrait"
             android:label="Historial"/>
         <activity
-            android:name=".Modificar"
+            android:name="com.newdesign.desarrollo.contadord_mx.Modificar"
             android:label="@string/title_activity_modificar"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
