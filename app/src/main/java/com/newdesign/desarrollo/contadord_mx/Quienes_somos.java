@@ -40,7 +40,7 @@ public class Quienes_somos extends AppCompatActivity {
     }
 
     private void enviarEmail(){
-        //Instanciamos un Intent del tipo ACTION_SEND
+        //Instanciamos un Intent del tipo ACTION_SENDD
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         //Aqui definimos la tipologia de datos del contenido dle Email en este caso text/html
         emailIntent.setType("text/html");
