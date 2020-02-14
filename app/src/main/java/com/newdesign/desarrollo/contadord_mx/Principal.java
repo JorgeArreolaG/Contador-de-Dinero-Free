@@ -4,10 +4,11 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +17,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+
 public class Principal extends AppCompatActivity {
 
     private EditText etTotal,et1000,et500,et200,et100,et50,et20,etm20,et10,et5,et2,et1,et05;
     private TextView lbl1000,lbl500,lbl200,lbl100,lbl50,lbl20,lblm20,lbl10,lbl5,lbl2,lbl1,lbl05;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,19 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        //Metodo para cargar anuncios
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
 
         //Declaracion de componentes
@@ -94,6 +117,13 @@ public class Principal extends AppCompatActivity {
 
                     LimpiarDatos();
 
+                    //Despues de limpiar los campos, cargamos el anuncio
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.");
+                    }
+
                     Toast.makeText(Principal.this, "Datos eliminados", Toast.LENGTH_LONG).show();
                 }
             }
@@ -107,6 +137,7 @@ public class Principal extends AppCompatActivity {
                         et100.getText().toString(), et50.getText().toString(), et20.getText().toString(), etm20.getText().toString(),
                         et10.getText().toString(), et5.getText().toString(), et2.getText().toString(), et1.getText().toString(),
                         et05.getText().toString());
+
 
                 LimpiarDatos();
 
@@ -619,7 +650,7 @@ public class Principal extends AppCompatActivity {
 
         if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
-            Toast.makeText(this,"Ingrese informacíon a guardar.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Ingrese información a guardar.",Toast.LENGTH_SHORT).show();
 
         }else{
             BaseHelper helper = new BaseHelper(this,"Demo",null,1);
@@ -642,6 +673,14 @@ public class Principal extends AppCompatActivity {
 
                 db.insert("BITACORAS",null,c);
                 db.close();
+
+                //Despues de limpiar los campos, cargamos el anuncio
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
+
                 Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
 
             }catch (Exception e){
@@ -709,6 +748,13 @@ public class Principal extends AppCompatActivity {
     public void ejecutar_historial (View view){
         Intent intent = new Intent(this, Bitacora.class);
         startActivity(intent);
+
+        //Despues de limpiar los campos, cargamos el anuncio
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
     }
 
     @Override
@@ -756,6 +802,13 @@ public class Principal extends AppCompatActivity {
 
             }else{
                 CompartirInformacion();
+
+                //Despues de limpiar los campos, cargamos el anuncio
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
             }
 
         }

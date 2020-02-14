@@ -3,10 +3,11 @@ package com.newdesign.desarrollo.contadord_mx;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class Modificar extends AppCompatActivity {
 
@@ -23,10 +30,24 @@ public class Modificar extends AppCompatActivity {
 
     String total, b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar);
+
+        //Metodo para cargar anuncios
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         //recibir datos a modificar
         Bundle b= getIntent().getExtras();
@@ -118,6 +139,13 @@ public class Modificar extends AppCompatActivity {
                     Toast.makeText(Modificar.this, "Sin datos", Toast.LENGTH_LONG).show();
 
                 }else{
+
+                    //Despues de limpiar los campos, cargamos el anuncio
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.");
+                    }
 
                     LimpiarDatos();
 
@@ -677,6 +705,13 @@ public class Modificar extends AppCompatActivity {
                 startActivity(i);
                 finish();
 
+                //Despues de limpiar los campos, cargamos el anuncio
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
+
             }catch (Exception e){
                 Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
             }
@@ -696,6 +731,12 @@ public class Modificar extends AppCompatActivity {
         db.execSQL(sql);
         db.close();
 
+        //Despues de limpiar los campos, cargamos el anuncio
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
     }
 
 

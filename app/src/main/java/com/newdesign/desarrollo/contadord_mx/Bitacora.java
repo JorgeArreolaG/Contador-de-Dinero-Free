@@ -3,7 +3,7 @@ package com.newdesign.desarrollo.contadord_mx;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,10 +11,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 import java.util.ArrayList;
 
 public class Bitacora extends AppCompatActivity {
 
+    private AdView mAdView;
     ListView listView;
     ArrayList<String> listado;
 
@@ -24,19 +33,31 @@ public class Bitacora extends AppCompatActivity {
         CargarListado();
     }
 
-
-
     String total, b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Initialize the Mobile Ads SDK.
+        setContentView(R.layout.activity_bitacora);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
+
         //Instancia a la base de datos
-        BaseHelper helper = new BaseHelper(this,"Demo",null,1);
+        BaseHelper helper = new BaseHelper(this, "Demo", null, 1);
         final SQLiteDatabase db = helper.getWritableDatabase();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bitacora);
-        listView = (ListView)findViewById(R.id.listview);
+
+        listView = (ListView) findViewById(R.id.listview);
         CargarListado();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -47,7 +68,7 @@ public class Bitacora extends AppCompatActivity {
                 //String sql="Select * from Bitacoras where Id="+clave;
 
                 //Consultamos los datos que corresponden al id de la lista
-                Cursor c = db.rawQuery("SELECT * FROM Bitacoras WHERE Id="+clave, null);
+                Cursor c = db.rawQuery("SELECT * FROM Bitacoras WHERE Id=" + clave, null);
 
                 if (c != null) {
                     c.moveToFirst();
@@ -76,7 +97,7 @@ public class Bitacora extends AppCompatActivity {
 
                 Intent intent = new Intent(Bitacora.this, Modificar.class);
                 intent.putExtra("Id", clave);
-                intent.putExtra("Total",total );
+                intent.putExtra("Total", total);
                 intent.putExtra("B1000", b1000);
                 intent.putExtra("B500", b500);
                 intent.putExtra("B200", b200);
@@ -96,12 +117,40 @@ public class Bitacora extends AppCompatActivity {
         });
 
 
-        if(getSupportActionBar()!= null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
     }
+
+
+    /** Called when leaving the activity *//*
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    *//** Called when returning to the activity *//*
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    *//** Called before the activity is destroyed *//*
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }*/
 
 
 
