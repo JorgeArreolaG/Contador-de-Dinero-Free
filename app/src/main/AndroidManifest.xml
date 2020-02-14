@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.newdesign.desarrollo.contadord_mx">
+    package="com.newdesignFree.desarrollo.contadord_mx">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,7 @@
             android:value="ca-app-pub-9495452629125064~6446033168"/>
 
         <activity
-            android:name="com.newdesign.desarrollo.contadord_mx.Principal"
+            android:name="com.newdesignFree.desarrollo.contadord_mx.Principal"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -28,14 +29,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.newdesign.desarrollo.contadord_mx.Quienes_somos"
+        <activity android:name="com.newdesignFree.desarrollo.contadord_mx.Quienes_somos"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.newdesign.desarrollo.contadord_mx.Bitacora"
+            android:name="com.newdesignFree.desarrollo.contadord_mx.Bitacora"
             android:screenOrientation="portrait"
             android:label="Historial"/>
         <activity
-            android:name="com.newdesign.desarrollo.contadord_mx.Modificar"
+            android:name="com.newdesignFree.desarrollo.contadord_mx.Modificar"
             android:label="@string/title_activity_modificar"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">

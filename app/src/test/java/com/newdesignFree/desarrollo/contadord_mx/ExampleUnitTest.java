@@ -1,4 +1,4 @@
-package com.newdesign.desarrollo.contadord_mx;
+package com.newdesignFree.desarrollo.contadord_mx;
 
 import org.junit.Test;
 

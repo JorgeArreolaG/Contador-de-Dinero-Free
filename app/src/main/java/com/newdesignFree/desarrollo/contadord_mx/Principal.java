@@ -1,5 +1,6 @@
-package com.newdesign.desarrollo.contadord_mx;
+package com.newdesignFree.desarrollo.contadord_mx;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,9 +9,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,20 +23,21 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
-public class Modificar extends AppCompatActivity {
+
+public class Principal extends AppCompatActivity {
 
     private EditText etTotal,et1000,et500,et200,et100,et50,et20,etm20,et10,et5,et2,et1,et05;
     private TextView lbl1000,lbl500,lbl200,lbl100,lbl50,lbl20,lblm20,lbl10,lbl5,lbl2,lbl1,lbl05;
-    int clave;
-
-    String total, b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
 
     private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modificar);
+        setContentView(R.layout.activity_principal);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         //Metodo para cargar anuncios
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -49,36 +51,6 @@ public class Modificar extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-9495452629125064/2143826070");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-        //recibir datos a modificar
-        Bundle b= getIntent().getExtras();
-
-        if(b!=null){
-           clave = b.getInt("Id");
-           total = b.getString("Total");
-           b1000 = b.getString("B1000");
-           b500 = b.getString("B500");
-           b200 = b.getString("B200");
-           b100 = b.getString("B100");
-           b50 = b.getString("B50");
-           b20 = b.getString("B20");
-           m20 = b.getString("M20");
-           m10 = b.getString("M10");
-           m5 = b.getString("M5");
-           m2 = b.getString("M2");
-           m1 = b.getString("M1");
-           m05 = b.getString("M05");
-
-
-        }
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        if(getSupportActionBar()!= null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
 
         //Declaracion de componentes
         et1000 = findViewById(R.id.et1000);
@@ -111,7 +83,8 @@ public class Modificar extends AppCompatActivity {
         lbl1 = findViewById(R.id.lbl1);
         lbl05 = findViewById(R.id.lbl05);
 
-        Button btnBorrar = (Button)findViewById(R.id.btnBorrar);
+
+        final Button btnBorrar = (Button)findViewById(R.id.btnBorrar);
         Button btnGuardar = (Button)findViewById(R.id.btnguardar);
 
 
@@ -129,6 +102,8 @@ public class Modificar extends AppCompatActivity {
         lbl1.setText("0");
         lbl05.setText("0");
 
+
+
         //Borrar toda la informacion
         btnBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,9 +111,11 @@ public class Modificar extends AppCompatActivity {
 
                 if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
-                    Toast.makeText(Modificar.this, "Sin datos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Principal.this, "Sin datos", Toast.LENGTH_LONG).show();
 
                 }else{
+
+                    LimpiarDatos();
 
                     //Despues de limpiar los campos, cargamos el anuncio
                     if (mInterstitialAd.isLoaded()) {
@@ -147,40 +124,26 @@ public class Modificar extends AppCompatActivity {
                         Log.d("TAG", "The interstitial wasn't loaded yet.");
                     }
 
-                    LimpiarDatos();
-
-                    Toast.makeText(Modificar.this, "Datos eliminados", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Principal.this, "Datos eliminados", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        //Guardar la informacion
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Modificar(clave,etTotal.getText().toString(),et1000.getText().toString(),et500.getText().toString()
-                        ,et200.getText().toString(),et100.getText().toString(),et50.getText().toString(),et20.getText().toString()
-                        ,etm20.getText().toString(),et10.getText().toString(),et5.getText().toString(),et2.getText().toString()
-                        ,et1.getText().toString(),et05.getText().toString());
+                Guardar(etTotal.getText().toString(), et1000.getText().toString(), et500.getText().toString(), et200.getText().toString(),
+                        et100.getText().toString(), et50.getText().toString(), et20.getText().toString(), etm20.getText().toString(),
+                        et10.getText().toString(), et5.getText().toString(), et2.getText().toString(), et1.getText().toString(),
+                        et05.getText().toString());
+
+
+                LimpiarDatos();
 
 
             }
         });
-
-        //Set informacion obtenida para modificar
-        etTotal.setText(total);
-        et1000.setText(b1000);
-        et500.setText(b500);
-        et200.setText(b200);
-        et100.setText(b100);
-        et50.setText(b50);
-        et20.setText(b20);
-        etm20.setText(m20);
-        et10.setText(m10);
-        et5.setText(m5);
-        et2.setText(m2);
-        et1.setText(m1);
-        et05.setText(m05);
-
 
         et1000.addTextChangedListener(new TextWatcher() {
             @Override
@@ -209,7 +172,6 @@ public class Modificar extends AppCompatActivity {
                     lbl1000.setText(""+mul_1000);
 
                     SumaTotal();
-
 
                 }
 
@@ -682,9 +644,9 @@ public class Modificar extends AppCompatActivity {
         etTotal.setText(resultado);
     }
 
-    //Boton modificar
-    private void Modificar(int Id, String Total, String B1000, String B500, String B200, String B100, String B50, String B20, String M20,
-                           String M10,  String M5,  String M2,  String M1,  String M05){
+    //Boton guardar
+    private void Guardar(String Total, String B1000, String B500, String B200, String B100, String B50, String B20, String M20,
+                         String M10,  String M5,  String M2,  String M1,  String M05){
 
         if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
 
@@ -694,16 +656,23 @@ public class Modificar extends AppCompatActivity {
             BaseHelper helper = new BaseHelper(this,"Demo",null,1);
             SQLiteDatabase db = helper.getWritableDatabase();
             try{
-                String sql="update Bitacoras set Total='" + Total +"', B1000='" + B1000 +"', B500='" + B500 +"', B200='" + B200 +
-                        "', B100='" + B100 +"', B50='" + B50 +"', B20='" + B20 +"', M20='" + M20 +
-                        "', M10='" + M10 +"', M5='" + M5 +"', M2='" + M2 +"', M1='" + M1 +"', M05='" + M05 +"' where Id="+Id;
-                db.execSQL(sql);
-                db.close();
-                Toast.makeText(this,"Se modifico correctamente",Toast.LENGTH_SHORT).show();
+                ContentValues c = new ContentValues();
+                c.put("Total",Total);
+                c.put("B1000",B1000);
+                c.put("B500",B500);
+                c.put("B200",B200);
+                c.put("B100",B100);
+                c.put("B50",B50);
+                c.put("B20",B20);
+                c.put("M20",M20);
+                c.put("M10",M10);
+                c.put("M5",M5);
+                c.put("M2",M2);
+                c.put("M1",M1);
+                c.put("M05",M05);
 
-                Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
-                startActivity(i);
-                finish();
+                db.insert("BITACORAS",null,c);
+                db.close();
 
                 //Despues de limpiar los campos, cargamos el anuncio
                 if (mInterstitialAd.isLoaded()) {
@@ -712,6 +681,8 @@ public class Modificar extends AppCompatActivity {
                     Log.d("TAG", "The interstitial wasn't loaded yet.");
                 }
 
+                Toast.makeText(this,"Registro Exitoso",Toast.LENGTH_SHORT).show();
+
             }catch (Exception e){
                 Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_SHORT).show();
             }
@@ -719,17 +690,64 @@ public class Modificar extends AppCompatActivity {
 
     }
 
-    //Instancia de la clase bitacora
-    private static Bitacora  bitacora;
+    //Compartir informacion de editText
+    private void CompartirInformacion(){
 
-    //Boton Eliminar
-    private void Eliminar(int Id){
-        BaseHelper helper = new BaseHelper(this,"Demo",null,1);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        String b1000, b500, b200, b100, b50, b20, m20, m10, m5, m2, m1, m05;
 
-        String sql="delete from Bitacoras where Id="+Id;
-        db.execSQL(sql);
-        db.close();
+        //Si el editext esta vacio le asigno un 0
+        b1000 = (et1000.getText().toString().trim().equals("")?"0":et1000.getText().toString());
+        b500 = (et500.getText().toString().trim().equals("")?"0":et500.getText().toString());
+        b200 = (et200.getText().toString().trim().equals("")?"0":et200.getText().toString());
+        b100 = (et100.getText().toString().trim().equals("")?"0":et100.getText().toString());
+        b50 = (et50.getText().toString().trim().equals("")?"0":et50.getText().toString());
+        b20 = (et20.getText().toString().trim().equals("")?"0":et20.getText().toString());
+        m20 = (etm20.getText().toString().trim().equals("")?"0":etm20.getText().toString());
+        m10 = (et10.getText().toString().trim().equals("")?"0":et10.getText().toString());
+        m5 = (et5.getText().toString().trim().equals("")?"0":et5.getText().toString());
+        m2 = (et2.getText().toString().trim().equals("")?"0":et2.getText().toString());
+        m1 = (et1.getText().toString().trim().equals("")?"0":et1.getText().toString());
+        m05 = (et05.getText().toString().trim().equals("")?"0":et05.getText().toString());
+
+
+        //Instanciamos un Intent del tipo ACTION_SEND
+        Intent compartirIntent = new Intent(android.content.Intent.ACTION_SEND);
+        //Aqui definimos la tipologia de datos del contenido
+        compartirIntent.setType("text/plain");
+        // Aqui definimos un titulo
+        compartirIntent.putExtra(Intent.EXTRA_TITLE, "Total del conteo");
+        // Aqui definimos el texto a enviar
+        compartirIntent.putExtra(Intent.EXTRA_TEXT,   "Total del conteo: "+'\n'+
+                b1000 + " Billetes de $1000 = "+ "$"+lbl1000.getText() +'\n'+
+                b500 + " Billetes de $500 = "+ "$"+lbl500.getText() +'\n'+
+                b200 + " Billetes de $200 = "+ "$"+lbl200.getText() +'\n'+
+                b100 + " Billetes de $100 = "+ "$"+lbl100.getText() +'\n'+
+                b50 + " Billetes de $50 = "+ "$"+lbl50.getText() +'\n'+
+                b20 + " Billetes de $20 = "+ "$"+lbl20.getText() +'\n'+
+                m20 + " Monedas de $20 = "+ "$"+lblm20.getText() +'\n'+
+                m10 + " Monedas de $10 = "+ "$"+lbl10.getText() +'\n'+
+                m5 + " Monedas de $5 = "+ "$"+lbl5.getText() +'\n'+
+                m2 + " Monedas de $2 = "+ "$"+lbl2.getText() +'\n'+
+                m5 + " Monedas de $1 = "+ "$"+lbl1.getText() +'\n'+
+                m05 + " Monedas de $.50 = "+ "$"+lbl5.getText() +'\n'+
+                "------------------------------------------------------------"+'\n'+
+                "Total: $"+etTotal.getText());
+        try {
+            //Enviamos el Correo iniciando una nueva Activity con el emailIntent.
+            startActivity(Intent.createChooser(compartirIntent, "Compartir conteo"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(Principal.this, "No hay ningun cliente de mensajeria instalado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void ejecutar_quienes_somos (View view){
+        Intent intent=new Intent (this, Quienes_somos.class);
+        startActivity(intent);
+    }
+
+    public void ejecutar_historial (View view){
+        Intent intent = new Intent(this, Bitacora.class);
+        startActivity(intent);
 
         //Despues de limpiar los campos, cargamos el anuncio
         if (mInterstitialAd.isLoaded()) {
@@ -739,20 +757,10 @@ public class Modificar extends AppCompatActivity {
         }
     }
 
-
-    protected void onRestart() {
-
-         super.onRestart();
-        Intent i = new Intent(Modificar.this, Bitacora.class);  //your class
-        startActivity(i);
-        finish();
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_modificar, menu);
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
         return true;
     }
 
@@ -763,27 +771,50 @@ public class Modificar extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (item.getItemId()==android.R.id.home){
-            Intent intent = new Intent(this, Bitacora.class);
-            startActivity(intent);
-            finish();
+        if (id == R.id.quienes_somos){
+            ejecutar_quienes_somos(null);
         }
 
-        if (id == R.id.modificar){
-            //Modificar(clave,etTotal.getText().toString());
-            //onBackPressed();
+        if (id == R.id.mas_app){
+            return  true;
         }
 
-        if (id == R.id.eliminar){
-            Eliminar(clave);
+        if (id == R.id.compartir){
+            return  true;
+        }
 
-            onRestart();
+        if (id == R.id.valorar){
+            return  true;
+        }
+
+        if (id == R.id.guardar){
+            //Guardar(etTotal.getText().toString());
+        }
+
+        if (id == R.id.historial){
+            ejecutar_historial(null);
+        }
+
+        if (id == R.id.compartirConteo){
+            if(etTotal.getText().toString().trim().equals("0.0") || etTotal.getText().toString().trim().equals("") ){
+
+                Toast.makeText(this,"Ingrese información a compartir.",Toast.LENGTH_SHORT).show();
+
+            }else{
+                CompartirInformacion();
+
+                //Despues de limpiar los campos, cargamos el anuncio
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
+            }
 
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+
 }
-
-
-
